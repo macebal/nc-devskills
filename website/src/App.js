@@ -1,17 +1,19 @@
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import InputForm from './components/InputForm';
 import ResultsTable from './components/ResultsTable';
 import SSNApi from './api/SSNApi';
 import { useState, useEffect } from 'react';
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 
 
 function App() {
   const DEFAULT_DATA = {
-    firstName: 'test name',
-    lastName: 'test last name',
-    address: '123 fake street',
-    ssn: '111-22-3333',
+    firstName: '',
+    lastName: '',
+    address: '',
+    ssn: '',
   }
 
   const [formData, setFormData] = useState(DEFAULT_DATA);
@@ -43,7 +45,7 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     setFormData(
       {
         firstName: formData.firstName.trim(),
@@ -53,23 +55,19 @@ function App() {
       })
 
     if (isValidForm()) {
-        let validSSN = true
+      const filteredMembers = members.filter(member => member.ssn === formData.ssn)
 
-        const filteredMembers = members.filter(member => member.ssn === formData.ssn)
-        
-        if (filteredMembers.length > 0) {
-          alert("Ya existe un miembro con ese SSN")
-        }else {
-          SSNApi.post(formData).then(jsonResponse => {
-            //modify the members' array which also triggers the useEffect hook to retrieve data from the API.
-            //this is done to speed the display of new info until the api responds
-            setMembers({
-              ...members,
-              formData
-            })
-          })  
-        }
-    }else{
+      if (filteredMembers.length > 0) {
+        alert("Ya existe un miembro con ese SSN")
+      } else {
+        SSNApi.post(formData).then(jsonResponse => {
+          //after the POST request, redraw the table with the new data
+          SSNApi.getAll().then(jsonResponse => {
+            setMembers(jsonResponse)
+          })
+        })
+      }
+    } else {
       alert("La información ingresada no es válida")
     }
   }
@@ -88,15 +86,32 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <InputForm 
-        onSubmit={handleSubmit} 
-        onInputChange={handleInputChange} 
-        formData={formData} 
-        isValid={isValid} 
-        onReset={handleReset}
-      />
-      <ResultsTable data={members} />
+    <div className="container">
+      <div className='row justify-content-center'>
+        <div className='col-10'>
+          <Header />
+        </div>
+      </div>
+      <div className='row align-items-center justify-content-center'>
+        <div className='col-4'>
+          <InputForm
+            onSubmit={handleSubmit}
+            onInputChange={handleInputChange}
+            formData={formData}
+            isValid={isValid}
+            onReset={handleReset}
+          />
+        </div>
+        <div className='col-6'>
+          <ResultsTable data={members} />
+        </div>
+      </div>
+      <div className='row justify-content-center'>
+        <div className='col-10'>
+          <Footer />
+        </div>
+      </div>
+
     </div>
   );
 }

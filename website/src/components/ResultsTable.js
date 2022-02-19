@@ -1,11 +1,12 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ResultsTable = props => {
 
   return (
     
-    <table>
-        <thead>
+    <table className='table table-striped table-hover justify-center text-center'>
+        <thead className='table-success'>
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
