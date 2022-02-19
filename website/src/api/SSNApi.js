@@ -5,7 +5,7 @@ const SSNApi = {
             return response.json();
           }).then(jsonResponse => {
             return jsonResponse
-          })
+          }).catch(e => console.log(e))
     },
     post(data) {
       //test for duplicate SSN
@@ -18,9 +18,7 @@ const SSNApi = {
         body: JSON.stringify(data)
       }).then(response => {
         return response.json();
-      }).then(jsonResponse => {
-        return jsonResponse
-      })
+      }).catch(e => console.log(e))
     } 
 }
 

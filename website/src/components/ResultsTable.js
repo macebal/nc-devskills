@@ -1,23 +1,9 @@
 import React from 'react'
 
-const FAKE_DATA = [
-    {
-        firstName: 'Homer',
-        lastName: 'Simpson',
-        address: '743 Evergreen Terrace',
-        ssn: '000-00-0000'
-    },
-    {
-        firstName: 'El Barto',
-        lastName: 'Simpson',
-        address: '123 Fake Street',
-        ssn: '333-22-4444'
-    }
-];
-
 const ResultsTable = props => {
 
   return (
+    
     <table>
         <thead>
             <tr>
@@ -28,7 +14,8 @@ const ResultsTable = props => {
             </tr>
         </thead>
         <tbody>
-            {props.data.map(result => (
+            {props.data !== undefined &&
+            props.data.map(result => (
                 <tr key={result.ssn.toString()}>
                     <td>{result.firstName}</td>
                     <td>{result.lastName}</td>
