@@ -10,7 +10,6 @@ const Footer = () => {
             <span className="text-muted">&copy; 2022 Mariano Acebal</span>
             </div>
         </footer>
-
     );
 }
 
