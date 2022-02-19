@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import InputForm from './components/InputForm';
+import ResultsTable from './components/ResultsTable';
+import SSNApi from './api/SSNApi';
+import { useState, useEffect } from 'react';
+
 
 function App() {
+  const [members, setMembers] = useState([])
+  
+  useEffect(() => {
+    SSNApi.getAll().then(jsonResponse => {
+      setMembers(jsonResponse)
+    })
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button type='button' onClick={event => setMembers(SSNApi.getAll())}>Test!</button>
+      <InputForm />
+      <ResultsTable data={members}/>
     </div>
   );
 }
