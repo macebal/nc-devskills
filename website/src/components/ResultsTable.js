@@ -16,7 +16,7 @@ const FAKE_DATA = [
 ];
 
 const ResultsTable = props => {
-  console.log(`Re Render Table: ${props.data}`)
+
   return (
     <table>
         <thead>
