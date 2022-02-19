@@ -6,8 +6,6 @@ import { useState, useEffect } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
-
-
 function App() {
   const DEFAULT_DATA = {
     firstName: '',
